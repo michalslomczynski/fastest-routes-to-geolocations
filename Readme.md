@@ -33,10 +33,13 @@ Response should be in JSON format, sorted from quickest to longest to traverse a
 ```
 ## How to run
 ### Docker
-With docker compose\ `docker-compose build` and `docker-compose up`\
+With docker compose\
+`docker-compose build` and `docker-compose up`\
 \
-With docker image\ `docker build -t shortest-ways-to-geolocations .` then `docker run -p 8086:8086 shortest-ways-to-geolocations`
+With docker image\
+`docker build -t shortest-ways-to-geolocations .` then `docker run -p 8086:8086 shortest-ways-to-geolocations`
 ### Local build
-Cd to project and resolve gorilla dependency with `go get github.com/gorilla/mux`, then run server with `go run main.go`.
+Go to / clone project directory and resolve gorilla dependency with\
+`go get github.com/gorilla/mux`, then run server with `go run main.go`.
 ## Reference
 http://project-osrm.org/
