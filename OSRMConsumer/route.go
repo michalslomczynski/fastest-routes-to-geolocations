@@ -39,7 +39,7 @@ func GetRoute(src Loc, dstPts []Loc) ([]Route, error) {
 		return nil, err
 	}
 
-	if respJSON.Code != "Ok" {
+	if respJSON.Code != "Ok" || resp.StatusCode != 200 {
 		return nil, err
 	}
 

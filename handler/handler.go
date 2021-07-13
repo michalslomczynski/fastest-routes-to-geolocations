@@ -25,6 +25,9 @@ type Route struct {
 func HandleRequest(w http.ResponseWriter, r *http.Request) {
 	source := *readSource(w, r)
 	destinations := readDestinations(w, r)
+	if (source == route.Loc{} || len(destinations) == 0) {
+		return
+	}
 
 	var routes []Route
 
@@ -32,7 +35,8 @@ func HandleRequest(w http.ResponseWriter, r *http.Request) {
 		dest := []route.Loc{destinations[i]}
 		route, err := route.GetRoute(source, dest)
 		if err != nil {
-			fmt.Fprintf(w, "Error occured during fetching remote API or invalid parameters provided.")
+			http.Error(w, "Error occured during fetching remote API or invalid parameters provided.", http.StatusBadRequest)
+			return
 		}
 		routes = append(routes, Route{destinations[i], route[0].Distance, route[0].Duration})
 
@@ -44,7 +48,8 @@ func HandleRequest(w http.ResponseWriter, r *http.Request) {
 
 	bJSON, err := json.Marshal(*response)
 	if err != nil {
-		fmt.Fprintf(w, "Internal error occured.")
+		http.Error(w, "Internal error occured", http.StatusBadRequest)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -53,20 +58,35 @@ func HandleRequest(w http.ResponseWriter, r *http.Request) {
 
 func readSource(w http.ResponseWriter, r *http.Request) *route.Loc {
 	src := r.URL.Query()["src"][0]
+
+	if len(src) == 0 {
+		http.Error(w, "No source point provided.", http.StatusBadRequest)
+		return nil
+	}
+
 	loc, err := parseLoc(src)
 	if err != nil {
-		fmt.Fprintf(w, "Wrong source point provided.")
+		http.Error(w, "Wrong source point provided.", http.StatusBadRequest)
+		return nil
 	}
 	return loc
 }
 
 func readDestinations(w http.ResponseWriter, r *http.Request) []route.Loc {
 	dst := r.URL.Query()["dst"]
+
+	if len(dst) == 0 {
+		http.Error(w, "No destination points provided.", http.StatusBadRequest)
+		return nil
+	}
+
 	var dests []route.Loc
+
 	for i, _ := range dst {
 		loc, err := parseLoc(dst[i])
 		if err != nil {
-			fmt.Fprintf(w, "Wrong destination points provided.")
+			http.Error(w, "Wrong destination points provided.", http.StatusBadRequest)
+			return nil
 		}
 		dests = append(dests, *loc)
 	}
