@@ -1,4 +1,4 @@
-# shortest-ways-to-geolocations
+# fastest-routes-to-geolocations
 ## How to construct an API call
  Make a http GET request with the following format:\
 `http://localhost:8086/routes?{src}&{dst}&{dst}...`\
