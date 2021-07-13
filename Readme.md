@@ -1,10 +1,12 @@
 # fastest-routes-to-geolocations
 ## How to construct an API call
  Make a http GET request with the following format:\
-`http://localhost:8086/routes?{src}&{dst}&{dst}...`\
-Example valid request:\
-`http://localhost:8086/routes?src=13.388860,52.517037&dst=13.428555,52.523219&dst=13.397634,52.529407`\
-Response should be in JSON format, sorted from quickest to longest to traverse and by distance if durations equals.\
+`http://localhost:8086/routes?{src}&{dst}&{dst}...`
+\
+Example valid request
+`http://localhost:8086/routes?src=13.388860,52.517037&dst=13.428555,52.523219&dst=13.397634,52.529407`
+
+Response should be in JSON format, sorted from quickest to longest to traverse and by distance if durations equals.
 ```json
 {
     "source": [
