@@ -23,7 +23,7 @@ type Route struct {
 }
 
 func HandleRequest(w http.ResponseWriter, r *http.Request) {
-	source := *readSource(w, r)
+	source := readSource(w, r)
 	destinations := readDestinations(w, r)
 	if (source == route.Loc{} || len(destinations) == 0) {
 		return
@@ -56,20 +56,19 @@ func HandleRequest(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%v", string(bJSON))
 }
 
-func readSource(w http.ResponseWriter, r *http.Request) *route.Loc {
-	src := r.URL.Query()["src"][0]
-
-	if len(src) == 0 {
+func readSource(w http.ResponseWriter, r *http.Request) route.Loc {
+	if len(r.URL.Query()["src"]) == 0 {
 		http.Error(w, "No source point provided.", http.StatusBadRequest)
-		return nil
+		return route.Loc{}
 	}
+	src := r.URL.Query()["src"][0]
 
 	loc, err := parseLoc(src)
 	if err != nil {
 		http.Error(w, "Wrong source point provided.", http.StatusBadRequest)
-		return nil
+		return route.Loc{}
 	}
-	return loc
+	return *loc
 }
 
 func readDestinations(w http.ResponseWriter, r *http.Request) []route.Loc {
