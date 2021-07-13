@@ -4,7 +4,7 @@
 `http://localhost:8086/routes?{src}&{dst}&{dst}...`\
 for example\
 `http://localhost:8086/routes?src=13.388860,52.517037&dst=13.428555,52.523219&dst=13.397634,52.529407`\
-response should be in JSON format, sorted from shortest to furthest location\
+response should be in JSON format, sorted from nearest to furthest location\
 `{"source":[13.38886,52.517036],"routes":[{"destination":[13.397634,52.529408],"distance":1884.9,"duration":251.4},{"destination":[13.428555,52.52322],"distance":3795.1,"duration":384.5}]}`
 ## How to run
 ### Docker
