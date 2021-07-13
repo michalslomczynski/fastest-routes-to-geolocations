@@ -105,7 +105,7 @@ func parseLoc(loc string) (*route.Loc, error) {
 	return &route.Loc{float32(lat), float32(lon)}, nil
 }
 
-// Sorts routes by duration, if its equal by
+// Sorts routes by duration, if its equal then by distance
 func sortRoutes(routes []Route) {
 	sort.Slice(routes, func(i, j int) bool {
 		if routes[i].Duration == routes[j].Duration {
