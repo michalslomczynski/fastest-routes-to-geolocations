@@ -2,7 +2,7 @@ version: "3"
 
 services:
   app:
-    image: shortest-ways-to-geolocations:latest
+    image: fastest-routes:latest
     build: .
     ports:
         - "8086:8086"
