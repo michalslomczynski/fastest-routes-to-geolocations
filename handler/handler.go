@@ -63,7 +63,7 @@ func readSource(w http.ResponseWriter, r *http.Request) route.Loc {
 
 	loc, err := parseLoc(src)
 	if err != nil {
-		http.Error(w, "Wrong source point provided.", http.StatusBadRequest)
+		http.Error(w, "Invalid source point provided.", http.StatusBadRequest)
 		return route.Loc{}
 	}
 	return *loc
@@ -81,7 +81,7 @@ func readDestinations(w http.ResponseWriter, r *http.Request) []route.Loc {
 	for i, _ := range dst {
 		loc, err := parseLoc(dst[i])
 		if err != nil {
-			http.Error(w, "Wrong destination points provided.", http.StatusBadRequest)
+			http.Error(w, "Invalid destination points provided.", http.StatusBadRequest)
 			return nil
 		}
 		dests = append(dests, *loc)
